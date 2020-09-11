@@ -6,6 +6,7 @@ require_once(__DIR__ . "/../model/Produto.php");
 require_once(__DIR__ . "/../dao/DaoDepartamento.php");
 require_once(__DIR__ . "/../dao/DaoMarca.php");
 require_once(__DIR__ . "/../dao/DaoProduto.php");
+require_once(__DIR__ . "/../dao/DaoPessoa.php");
 
 $db = Db::getInstance();
 if ($db->connect()) {

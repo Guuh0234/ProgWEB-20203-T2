@@ -62,11 +62,11 @@ ob_start();
                         <td><?php echo $p->getCPF(); ?></td>
                         <td>
                             <a class="btn btn-danger btn-sm active" 
-                                href="apagar.php?id=<?php echo $d->getId();?>">
+                                href="apagar.php?id=<?php echo $p->getId();?>">
                                 Apagar
                             </a>
                             <a class="btn btn-secondary btn-sm active" 
-                                href="editar.php?id=<?php echo $d->getId();?>">
+                                href="editar.php?id=<?php echo $p->getId();?>">
                                 Editar
                             </a>                        
                         </td>

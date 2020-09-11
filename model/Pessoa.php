@@ -9,7 +9,7 @@ class Pessoa {
     private $cpf;
     private $telefone;
 
-    public function __construct($id = -1, $nome, $idade, $endereco, $cpf, $telefone){
+    public function __construct(int $id = -1, $nome, int $idade, $endereco, $cpf, $telefone){
         $this->id = $id;
         $this->nome = $nome;
         $this->idade = $idade;
@@ -18,7 +18,7 @@ class Pessoa {
         $this->telefone = $telefone;
     }
 
-    public function setId($id) {
+    public function setId(int $id) {
         $this->id= $id;
     }
 
@@ -34,7 +34,7 @@ class Pessoa {
         return $this->nome;
     }   
     
-    public function setIdade($idade) {
+    public function setIdade(int $idade) {
         $this->idade= $idade;
     }
     

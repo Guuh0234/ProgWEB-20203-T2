@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../db/Db.php');
 require_once(__DIR__ . '/../model/Pessoa.php');
-require_once(__DIR__ . '/../db/Db.php');
+
 
 class DaoPessoa {
 
@@ -13,17 +13,16 @@ class DaoPessoa {
     }
 
     public function porId(int $id): ?Pessoa {
-        $sql = "SELECT id, nome, idade, endereco, cpf, telefone FROM Pessoa where id = ?";
+        $sql = "SELECT nome, idade, endereco, cpf, telefone FROM Pessoa where id = ?";
         $stmt = $this->connection->prepare($sql);
         $pes = null;
         if ($stmt) {
           $stmt->bind_param('i',$id);
           if ($stmt->execute()) {
-            $nome = '';
-            $stmt->bind_result($id, $nome, $idade, $endereco, $cpf, $telefone);
+            $stmt->bind_result($nome, $idade, $endereco, $cpf, $telefone);
             $stmt->store_result();
             if ($stmt->num_rows == 1 && $stmt->fetch()) {
-              $pessoa = new Pessoa($id, $nome, $idade, $endereco, $cpf, $telefone);
+              $pes = new Pessoa($id, $nome, $idade, $endereco, $cpf, $telefone);
             }
           }
           $stmt->close();
@@ -32,7 +31,7 @@ class DaoPessoa {
       }
 
       public function inserir(Pessoa $pessoa): bool {
-        $sql = "INSERT INTO pessoa (nome, idade, endereco, cpf, telefone) VALUES(?)";
+        $sql = "INSERT INTO pessoa (nome, idade, endereco, cpf, telefone) VALUES(?,?,?,?,?)";
         $stmt = $this->connection->prepare($sql);
         $res = false;
         if ($stmt) {
@@ -43,7 +42,8 @@ class DaoPessoa {
           $cpf      =   $pessoa->getCpf();
           $telefone =   $pessoa->getTelefone();
 
-          $stmt->bind_param('sssss', $nome, $idade, $endereco, $cpf, $telefone);
+          $stmt->bind_param('sisss', $nome, $idade, $endereco, $cpf, $telefone);
+          
           if ($stmt->execute()) {
               $id = $this->connection->getLastID();
               $pessoa->setId($id);
@@ -79,8 +79,9 @@ class DaoPessoa {
             $endereco =   $pessoa->getEndereco();
             $cpf      =   $pessoa->getCpf();
             $telefone =   $pessoa->getTelefone();
+            $id       =   $pessoa->getId();
 
-          $stmt->bind_param('is', $id, $nome, $idade, $endereco, $cpf, $telefone);
+          $stmt->bind_param('isisss',$id, $nome, $idade, $endereco, $cpf, $telefone);
           $ret = $stmt->execute();
           $stmt->close();
         }

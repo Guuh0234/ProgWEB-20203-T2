@@ -1,8 +1,8 @@
 <?php
 
 require_once(__DIR__ . '/../../db/Db.php');
-require_once(__DIR__ . '/../../model/Marca.php');
-require_once(__DIR__ . '/../../dao/DaoMarca.php');
+require_once(__DIR__ . '/../../model/Pessoa.php');
+require_once(__DIR__ . '/../../dao/DaoPessoa.php');
 require_once(__DIR__ . '/../../config/config.php');
 
 $conn = Db::getInstance();
@@ -12,7 +12,8 @@ if (! $conn->connect()) {
 }
 
 $daoPessoa = new DaoPessoa($conn);
-$daoPessoa->inserir(new Pessoa($_POST['nome'],  $_POST['idade'], $_POST['endereco'], $_POST['cpf'], $_POST['telefone']));
+$novaPessoa = new Pessoa($_POST['nome'],  $_POST['idade'], $_POST['endereco'], $_POST['cpf'], $_POST['telefone']);
+$daoPessoa->inserir( $novaPessoa );
     
 header('Location: ./index.php');
 
